@@ -1,0 +1,13 @@
+type ResultCountry implements Result{
+    status: Boolean!
+    message: String!
+    elementSelect: String!
+    country: Country
+}
+
+type ResultCity implements Result{
+    status: Boolean!
+    message: String!
+    elementSelect: String!
+    city: City
+}

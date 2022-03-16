@@ -1,0 +1,7 @@
+type Timezone {
+    zoneName: String
+    gmtOffset: Int
+    gmtOffsetName: String
+    abbreviation: String
+    tzName: String
+}
