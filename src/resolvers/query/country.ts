@@ -13,7 +13,7 @@ const queryCountryResolvers = {
       },
       context: { db: Db }
     ) {
-      const paginationData = await pagination(
+      const { page, pages, itemsPage, total} = await pagination(
         context.db,
         'countries',
         args.page,
@@ -23,10 +23,10 @@ const queryCountryResolvers = {
       
       return {
         info: {
-          page: paginationData.page,
-          pages: paginationData.pages,
-          itemsPage: paginationData.itemsPage,
-          total: paginationData.total,
+          page,
+          pages,
+          itemsPage,
+          total,
         },
         status: true,
         message: "Countries correct load",

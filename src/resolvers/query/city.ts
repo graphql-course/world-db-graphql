@@ -1,17 +1,43 @@
 // import UsersService from "./../../services/users.service";
 import { Db } from "mongodb";
+import { ELEMENT_SELECT } from "../../config/constants";
+import { pagination } from "../../lib/pagination";
 
 const queryCityResolvers = {
   Query: {
-    cities(
+    async cities(
       _: {},
       args: {
         page: number;
         itemsPage: number;
-        active: string;
       },
       context: { db: Db }
     ) {
+      const { page, pages, itemsPage, total} = await pagination(
+        context.db,
+        'cities',
+        args.page,
+        args.itemsPage,
+        {}
+      );
+      return {
+        info: {
+          page,
+          pages,
+          itemsPage,
+          total,
+        },
+        status: true,
+        message: "Countries correct load",
+        elementSelect: ELEMENT_SELECT.CITIES,
+        list: context.db
+          .collection("cities")
+          .find()
+          .skip((args.page - 1) * 10)
+          .limit(args.itemsPage)
+          .sort({ id: 1 })
+          .toArray(),
+      };
       /*return new UsersService({pagination: {
         page: args.page,
         itemsPage: args.itemsPage
