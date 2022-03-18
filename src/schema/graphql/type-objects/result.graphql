@@ -2,12 +2,30 @@ type ResultCountry implements Result{
     status: Boolean!
     message: String!
     elementSelect: String!
-    country: Country
+    item: Country
 }
 
 type ResultCity implements Result{
     status: Boolean!
     message: String!
     elementSelect: String!
-    city: City
+    item: City
+}
+
+type ResultCountries implements Result{
+    "Mostra información del sistema de paginación"
+    info: ResultInfo
+    status: Boolean!
+    message: String!
+    elementSelect: String!
+    list: [Country]
+}
+
+type ResultCities implements Result{
+    "Mostra información del sistema de paginación"
+    info: ResultInfo
+    status: Boolean!
+    message: String!
+    elementSelect: String!
+    list: [City]
 }

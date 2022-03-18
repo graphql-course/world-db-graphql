@@ -1,6 +1,8 @@
 export const ELEMENT_SELECT = {
   COUNTRY: "country",
   CITY: "city",
+  COUNTRIES: "countries",
+  CITIES: "cities",
 };
 
 export const UPDATE_MESSAGES = {

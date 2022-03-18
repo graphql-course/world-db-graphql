@@ -1,19 +1,21 @@
 "Definiciones de los tipos de raíz"
 type Query {
-    "Lista de usuarios registrados en la Base de datos (Clientes / Admins)"
-    countries (
-        "Página seleccionada para acceder a ella"
-        page: Int = 1,
-        "Usuarios por página que se obtendrán por página"
-        itemsPage: Int = 20): Result
-    "Para iniciar sesión de usuario"
-    cities(
-        "Página seleccionada para acceder a ella"
-        page: Int = 1,
-        "Usuarios por página que se obtendrán por página"
-        itemsPage: Int = 20): Result
-    "Obtener los detalles de un usuario seleccionado"
-    country(id: ID!): Result,
-    "Obtener los detalles de un usuario seleccionado"
-    city(id: ID!): Result
+  "Lista de usuarios registrados en la Base de datos (Clientes / Admins)"
+  countries(
+    "Página seleccionada para acceder a ella"
+    page: Int = 1
+    "Usuarios por página que se obtendrán por página"
+    itemsPage: Int = 20
+  ): Result
+  "Para iniciar sesión de usuario"
+  cities(
+    "Página seleccionada para acceder a ella"
+    page: Int = 1
+    "Usuarios por página que se obtendrán por página"
+    itemsPage: Int = 20
+  ): Result
+  "Obtener los detalles de un usuario seleccionado"
+  country(id: ID!): Result
+  "Obtener los detalles de un usuario seleccionado"
+  city(id: ID!): Result
 }

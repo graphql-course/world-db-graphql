@@ -11,6 +11,12 @@ const resolverTypes: IResolvers = {
       if (root.elementSelect === ELEMENT_SELECT.CITY) {
         return "ResultCity";
       }
+      if (root.elementSelect === ELEMENT_SELECT.COUNTRIES) {
+        return "ResultCountries";
+      }
+      if (root.elementSelect === ELEMENT_SELECT.CITIES) {
+        return "ResultCities";
+      }
       return null; // GraphQLError is thrown
     },
   },
