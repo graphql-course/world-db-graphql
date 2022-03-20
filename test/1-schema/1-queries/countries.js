@@ -4,7 +4,7 @@ const { it } = require("mocha");
 const apiSchema = require("./../../mocks/api-schema");
 
 // const tester =
-describe("Test Schema GraphQL - Query - cities", () => {
+describe("Test Schema GraphQL - Query - countries", () => {
   let tester;
   before(function () {
     tester = new EasyGraphQLTester(apiSchema);
