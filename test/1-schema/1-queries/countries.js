@@ -17,6 +17,12 @@ describe("Test Schema GraphQL - Query - cities", () => {
           message
           elementSelect
           ... on ResultCountries {
+            info {
+              page
+              total
+              itemsPage
+              pages
+            }
             list {
               id
               name
@@ -48,31 +54,39 @@ describe("Test Schema GraphQL - Query - cities", () => {
   });
   it("'countries' válida - Usando Query Variables - Paginación - Página", () => {
     const query = `
-    query Cities($page: Int ) {
-        cities(page: $page) {
-          ... on ResultCities {
+    query Countries($page: Int) {
+        countries(page: $page) {
+          status
+          message
+          elementSelect
+          ... on ResultCountries {
             info {
               page
               total
               itemsPage
               pages
             }
-            status
-            message
-            elementSelect
             list {
               id
               name
-              latitude
-              longitude
-              countryId
-              country {
-                name
-                iso3
-                capital
-                currency
-                native
-                id
+              iso3
+              iso2
+              numeric_code
+              phone_code
+              capital
+              currency
+              currency_name
+              currency_symbol
+              tld
+              native
+              region
+              subregion
+              timezones {
+                zoneName
+                gmtOffset
+                gmtOffsetName
+                abbreviation
+                tzName
               }
             }
           }
@@ -82,31 +96,39 @@ describe("Test Schema GraphQL - Query - cities", () => {
   });
   it("'countries' válida - Usando Query Variables - Paginación - Página, Items Página", () => {
     const query = `
-    query Cities($page: Int, $itemsPage: Int) {
-        cities(page: $page, itemsPage: $itemsPage) {
-          ... on ResultCities {
+    query Countries($page: Int, $itemsPage: Int) {
+        countries(page: $page, itemsPage: $itemsPage) {
+          status
+          message
+          elementSelect
+          ... on ResultCountries {
             info {
               page
               total
               itemsPage
               pages
             }
-            status
-            message
-            elementSelect
             list {
               id
               name
-              latitude
-              longitude
-              countryId
-              country {
-                name
-                iso3
-                capital
-                currency
-                native
-                id
+              iso3
+              iso2
+              numeric_code
+              phone_code
+              capital
+              currency
+              currency_name
+              currency_symbol
+              tld
+              native
+              region
+              subregion
+              timezones {
+                zoneName
+                gmtOffset
+                gmtOffsetName
+                abbreviation
+                tzName
               }
             }
           }
@@ -114,5 +136,49 @@ describe("Test Schema GraphQL - Query - cities", () => {
       }
     `;
     tester.test(true, query, { page: 2, itemsPage: 4 });
+  });
+
+  it("'countries' inválida - Pasar página seleccionada en un string", () => {
+    const query = `
+    query Countries($page: Int) {
+        countries(page: $page) {
+          status
+          message
+          elementSelect
+          ... on ResultCountries {
+            info {
+              page
+              total
+              itemsPage
+              pages
+            }
+            list {
+              id
+              name
+              iso3
+              iso2
+              numeric_code
+              phone_code
+              capital
+              currency
+              currency_name
+              currency_symbol
+              tld
+              native
+              region
+              subregion
+              timezones {
+                zoneName
+                gmtOffset
+                gmtOffsetName
+                abbreviation
+                tzName
+              }
+            }
+          }
+        }
+      }
+    `;
+    tester.test(false, query, { page: '2' });
   });
 });

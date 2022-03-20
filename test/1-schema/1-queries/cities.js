@@ -113,4 +113,38 @@ describe("Test Schema GraphQL - Query - cities", () => {
     `;
     tester.test(true, query, { page: 2, itemsPage: 4 });
   });
+  it("'cities' válida - Pasar página seleccionada en un string", () => {
+    const query = `
+    query Cities($page: Int ) {
+        cities(page: $page) {
+          ... on ResultCities {
+            info {
+              page
+              total
+              itemsPage
+              pages
+            }
+            status
+            message
+            elementSelect
+            list {
+              id
+              name
+              latitude
+              longitude
+              countryId
+              country {
+                name
+                iso3
+                capital
+                currency
+                native
+                id
+              }
+            }
+          }
+        }
+      }`;
+    tester.test(false, query, { page: '1' });
+  });
 });
