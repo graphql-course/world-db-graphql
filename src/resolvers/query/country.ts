@@ -47,15 +47,25 @@ const queryCountryResolvers = {
         itemsPage: args.itemsPage
       }}, context).items(args.active);*/
     },
-    country(
+    async country(
       _: {},
       args: {
         id: string;
       },
       context: { db: Db }
     ) {
-      // return new UsersService(args, context).details();
-    }
+      const item = await context.db.collection('countries').findOne({
+        id: +args.id,
+      });
+      return {
+        status: item ? true : false,
+        message: item
+          ? 'Country correct load'
+          : 'Country not found, please try again',
+        elementSelect: ELEMENT_SELECT.COUNTRY,
+        item,
+      };
+    },
   },
 };
 
