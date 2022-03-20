@@ -1,7 +1,7 @@
 // import UsersService from "./../../services/users.service";
-import { Db } from "mongodb";
-import { ELEMENT_SELECT } from "../../config/constants";
-import { pagination } from "../../lib/pagination";
+import { Db } from 'mongodb';
+import { ELEMENT_SELECT } from '../../config/constants';
+import { pagination } from '../../lib/pagination';
 
 const queryCityResolvers = {
   Query: {
@@ -13,7 +13,7 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const { page, pages, itemsPage, total} = await pagination(
+      const { page, pages, itemsPage, total } = await pagination(
         context.db,
         'cities',
         args.page,
@@ -28,10 +28,10 @@ const queryCityResolvers = {
           total,
         },
         status: true,
-        message: "Countries correct load",
+        message: 'Countries correct load',
         elementSelect: ELEMENT_SELECT.CITIES,
         list: context.db
-          .collection("cities")
+          .collection('cities')
           .find()
           .skip((args.page - 1) * 10)
           .limit(args.itemsPage)
@@ -46,12 +46,42 @@ const queryCityResolvers = {
     city(
       _: {},
       args: {
-        id: string
+        id: string;
       },
       context: { db: Db }
     ) {
       // return new UsersService(args, context).details();
-    }
+    },
+    async citiesByCountry(
+      _: {},
+      args: {
+        country: string;
+        page: number;
+        itemsPage: number;
+      },
+      context: { db: Db }
+    ) {
+      const { page, pages, itemsPage, total } = await pagination(
+        context.db,
+        'cities',
+        args.page,
+        args.itemsPage,
+        {
+          countryId: +args.country,
+        }
+      );
+      console.log(pages, total, itemsPage, page);
+      const data = await context.db
+        .collection('cities')
+        .find({
+          countryId: +args.country,
+        })
+        .skip((page - 1) * 10)
+        .limit(itemsPage)
+        .sort({ id: 1 })
+        .toArray();
+      console.log(data);
+    },
   },
 };
 

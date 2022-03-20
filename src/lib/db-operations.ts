@@ -123,3 +123,15 @@ export const manageStockUpdate = async (
     .collection(collection)
     .updateOne(filter, { $inc: updateObject });
 };
+
+export const aggregateOperation = async(
+  database: Db,
+  collection: string,
+  pipeline: any
+): Promise<Array<object>> => {
+  return new Promise((resolve) => {
+    resolve(database.collection(collection).aggregate(
+      pipeline
+    ).toArray());
+  });
+};

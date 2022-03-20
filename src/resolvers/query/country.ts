@@ -1,7 +1,10 @@
 // import UsersService from "./../../services/users.service";
-import { Db } from "mongodb";
-import { ELEMENT_SELECT } from "../../config/constants";
-import { pagination } from "../../lib/pagination";
+import assert from 'assert';
+import { Db } from 'mongodb';
+import { pipeline } from 'stream';
+import { ELEMENT_SELECT } from '../../config/constants';
+import { aggregateOperation } from '../../lib/db-operations';
+import { pagination } from '../../lib/pagination';
 
 const queryCountryResolvers = {
   Query: {
@@ -13,14 +16,14 @@ const queryCountryResolvers = {
       },
       context: { db: Db }
     ) {
-      const { page, pages, itemsPage, total} = await pagination(
+      const { page, pages, itemsPage, total } = await pagination(
         context.db,
         'countries',
         args.page,
         args.itemsPage,
         {}
       );
-      
+
       return {
         info: {
           page,
@@ -29,10 +32,10 @@ const queryCountryResolvers = {
           total,
         },
         status: true,
-        message: "Countries correct load",
+        message: 'Countries correct load',
         elementSelect: ELEMENT_SELECT.COUNTRIES,
         list: context.db
-          .collection("countries")
+          .collection('countries')
           .find()
           .skip((args.page - 1) * 10)
           .limit(args.itemsPage)
@@ -52,7 +55,7 @@ const queryCountryResolvers = {
       context: { db: Db }
     ) {
       // return new UsersService(args, context).details();
-    },
+    }
   },
 };
 
