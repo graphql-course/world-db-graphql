@@ -24,6 +24,14 @@ const queryCountryResolvers = {
         {}
       );
 
+      const list = await context.db
+      .collection('countries')
+      .find()
+      .skip((args.page - 1) * 10)
+      .limit(args.itemsPage)
+      .sort({ id: 1 })
+      .toArray();
+
       return {
         info: {
           page,
@@ -31,21 +39,15 @@ const queryCountryResolvers = {
           itemsPage,
           total,
         },
-        status: true,
-        message: 'Countries correct load',
+        status: list && list.length ? true : false,
+        message: list && list.length
+          ? 'Countries correct load'
+          : page > pages
+          ? 'Select page is not correct selection'
+          : 'Countries not load correctly. Please try again',
         elementSelect: ELEMENT_SELECT.COUNTRIES,
-        list: context.db
-          .collection('countries')
-          .find()
-          .skip((args.page - 1) * 10)
-          .limit(args.itemsPage)
-          .sort({ id: 1 })
-          .toArray(),
+        list,
       };
-      /*return new UsersService({pagination: {
-        page: args.page,
-        itemsPage: args.itemsPage
-      }}, context).items(args.active);*/
     },
     async country(
       _: {},
