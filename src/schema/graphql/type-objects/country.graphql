@@ -15,8 +15,8 @@ type Country {
   subregion: String!
   timezones: [Timezone!]
   translations: Translation
-  latitude: String!
-  longitude: String!
+  latitude: Float!
+  longitude: Float!
   emoji: String!
   emojiU: String!
   borders: [Country]

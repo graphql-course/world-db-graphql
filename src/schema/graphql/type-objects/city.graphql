@@ -1,8 +1,8 @@
 type City {
     id: ID!
     name: String!
-    latitude: String!
-    longitude: String!
+    latitude: Float!
+    longitude: Float!
     countryId: String!
     country: Country
 }

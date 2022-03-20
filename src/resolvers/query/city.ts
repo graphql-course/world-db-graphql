@@ -70,8 +70,18 @@ const queryCityResolvers = {
           countryId: +args.country,
         }
       );
-      console.log(pages, total, itemsPage, page);
-      const data = await context.db
+      
+      return {
+        info: {
+          page,
+          pages,
+          itemsPage,
+          total,
+        },
+        status: true,
+        message: 'Countries correct load',
+        elementSelect: ELEMENT_SELECT.CITIES,
+        list: await context.db
         .collection('cities')
         .find({
           countryId: +args.country,
@@ -79,8 +89,8 @@ const queryCityResolvers = {
         .skip((page - 1) * 10)
         .limit(itemsPage)
         .sort({ id: 1 })
-        .toArray();
-      console.log(data);
+        .toArray()
+      };
     },
   },
 };
