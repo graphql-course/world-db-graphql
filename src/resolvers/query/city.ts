@@ -43,14 +43,21 @@ const queryCityResolvers = {
         itemsPage: args.itemsPage
       }}, context).items(args.active);*/
     },
-    city(
+    async city(
       _: {},
       args: {
         id: string;
       },
       context: { db: Db }
     ) {
-      // return new UsersService(args, context).details();
+      return {
+        status: true,
+        message: 'City select correct load',
+        elementSelect: ELEMENT_SELECT.CITY,
+        item: await context.db.collection('cities').findOne({
+          id: +args.id,
+        }),
+      };
     },
     async citiesByCountry(
       _: {},
@@ -70,7 +77,7 @@ const queryCityResolvers = {
           countryId: +args.country,
         }
       );
-      
+
       return {
         info: {
           page,
@@ -82,14 +89,14 @@ const queryCityResolvers = {
         message: 'Countries correct load',
         elementSelect: ELEMENT_SELECT.CITIES,
         list: await context.db
-        .collection('cities')
-        .find({
-          countryId: +args.country,
-        })
-        .skip((page - 1) * 10)
-        .limit(itemsPage)
-        .sort({ id: 1 })
-        .toArray()
+          .collection('cities')
+          .find({
+            countryId: +args.country,
+          })
+          .skip((page - 1) * 10)
+          .limit(itemsPage)
+          .sort({ id: 1 })
+          .toArray(),
       };
     },
   },

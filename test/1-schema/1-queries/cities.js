@@ -113,7 +113,7 @@ describe("Test Schema GraphQL - Query - cities", () => {
     `;
     tester.test(true, query, { page: 2, itemsPage: 4 });
   });
-  it("'cities' válida - Pasar página seleccionada en un string", () => {
+  it("'cities' inválida - Pasar página seleccionada en un string", () => {
     const query = `
     query Cities($page: Int ) {
         cities(page: $page) {
