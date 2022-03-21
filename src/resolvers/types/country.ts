@@ -1,5 +1,7 @@
+import { findElements } from "./../../lib/db-operations";
 import { IResolvers } from "@graphql-tools/utils";
 import { Db } from "mongodb";
+import { COLLECTIONS } from "../../config/constants";
 
 const resolverCountryType: IResolvers = {
   Country: {
@@ -7,11 +9,10 @@ const resolverCountryType: IResolvers = {
       // console.log(parent.borders);
       // Uso de operador "$in"
       // https://docs.mongodb.com/manual/reference/operator/query/in/
-      return await context.db
-        .collection("countries")
-        .find({ iso3: { $in: parent.borders } })
-        .toArray();
-    }
+      return await findElements(context.db, COLLECTIONS.countries, {
+        iso3: { $in: parent.borders },
+      });
+    },
   },
 };
 

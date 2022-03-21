@@ -1,5 +1,5 @@
 import { Db } from "mongodb";
-import { ELEMENT_SELECT } from "../../config/constants";
+import { COLLECTIONS, ELEMENT_SELECT } from "../../config/constants";
 import { pagination } from "../../lib/pagination";
 
 const queryCountryResolvers = {
@@ -14,14 +14,14 @@ const queryCountryResolvers = {
     ) {
       const { page, pages, itemsPage, total } = await pagination(
         context.db,
-        "countries",
+        COLLECTIONS.countries,
         args.page,
         args.itemsPage,
         {}
       );
 
       const list = await context.db
-        .collection("countries")
+        .collection(COLLECTIONS.countries)
         .find()
         .skip((args.page - 1) * args.itemsPage)
         .limit(args.itemsPage)
@@ -53,7 +53,7 @@ const queryCountryResolvers = {
       },
       context: { db: Db }
     ) {
-      const item = await context.db.collection("countries").findOne({
+      const item = await context.db.collection(COLLECTIONS.countries).findOne({
         id: +args.id,
       });
       return {

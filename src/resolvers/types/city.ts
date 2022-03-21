@@ -1,16 +1,15 @@
+import { findOneElement } from "./../../lib/db-operations";
 import { IResolvers } from "@graphql-tools/utils";
 import { Db } from "mongodb";
+import { COLLECTIONS } from "../../config/constants";
 
 const resolverCityType: IResolvers = {
   City: {
     country: async (parent, __, context: { db: Db }) => {
-      // console.log(parent.borders);
-      // Uso de operador "$in"
-      // https://docs.mongodb.com/manual/reference/operator/query/in/
-      return await context.db
-        .collection("countries")
-        .findOne({ id: parent.countryId });
-    }
+      return await findOneElement(context.db, COLLECTIONS.countries, {
+        id: parent.countryId,
+      });
+    },
   },
 };
 

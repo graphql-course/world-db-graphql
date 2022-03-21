@@ -1,3 +1,4 @@
+import { COLLECTIONS } from './../../config/constants';
 // import UsersService from "./../../services/users.service";
 import { Db } from "mongodb";
 import { ELEMENT_SELECT } from "../../config/constants";
@@ -15,13 +16,13 @@ const queryCityResolvers = {
     ) {
       const { page, pages, itemsPage, total } = await pagination(
         context.db,
-        "cities",
+        COLLECTIONS.cities,
         args.page,
         args.itemsPage,
         {}
       );
       const list = await context.db
-        .collection("cities")
+        .collection(COLLECTIONS.cities)
         .find()
         .skip((args.page - 1) * args.itemsPage)
         .limit(args.itemsPage)
@@ -53,7 +54,7 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const item = await context.db.collection("cities").findOne({
+      const item = await context.db.collection(COLLECTIONS.cities).findOne({
         id: +args.id,
       });
       return {
@@ -76,7 +77,7 @@ const queryCityResolvers = {
     ) {
       const { page, pages, itemsPage, total } = await pagination(
         context.db,
-        "cities",
+        COLLECTIONS.cities,
         args.page,
         args.itemsPage,
         {
@@ -85,7 +86,7 @@ const queryCityResolvers = {
       );
 
       const list = await context.db
-        .collection("cities")
+        .collection(COLLECTIONS.cities)
         .find({
           countryId: +args.country,
         })
