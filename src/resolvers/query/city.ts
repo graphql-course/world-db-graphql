@@ -3,6 +3,7 @@ import { COLLECTIONS } from './../../config/constants';
 import { Db } from "mongodb";
 import { ELEMENT_SELECT } from "../../config/constants";
 import { pagination } from "../../lib/pagination";
+import ResolversOperationsService from '../../services/resolver-operations';
 
 const queryCityResolvers = {
   Query: {
@@ -14,38 +15,11 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const { page, pages, itemsPage, total } = await pagination(
-        context.db,
+      return new ResolversOperationsService(context.db).list(
         COLLECTIONS.cities,
-        args.page,
-        args.itemsPage,
-        {}
-      );
-      const list = await context.db
-        .collection(COLLECTIONS.cities)
-        .find()
-        .skip((args.page - 1) * args.itemsPage)
-        .limit(args.itemsPage)
-        .sort({ id: 1 })
-        .toArray();
-
-      return {
-        info: {
-          page,
-          pages,
-          itemsPage,
-          total,
-        },
-        status: list && list.length ? true : false,
-        message:
-          list && list.length
-            ? "Cities correct load"
-            : page > pages
-            ? "Select page is not correct selection"
-            : "Cities not load correctly. Please try again",
-        elementSelect: ELEMENT_SELECT.CITIES,
-        list,
-      };
+        ELEMENT_SELECT.CITIES,
+        args.page, args.itemsPage
+      )
     },
     async city(
       _: {},

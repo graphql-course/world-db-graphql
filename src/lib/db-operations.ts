@@ -1,4 +1,4 @@
-import { Db } from "mongodb";
+import { Db, Sort } from "mongodb";
 import { IPaginationOptions } from "../interfaces/pagination-options.interface";
 
 /**
@@ -75,13 +75,14 @@ export const findElements = async (
     itemsPage: -1,
     skip: 0,
     total: -1
-  }
+  },
+  sort: Sort = { id: 1 }
 ) => {
   if (paginationOptions.total === -1) {
     return await database.collection(collection).find(filter).toArray();
   }
   return await database.collection(collection).find(filter).limit(paginationOptions.itemsPage)
-                        .skip(paginationOptions.skip).toArray();
+                        .skip(paginationOptions.skip).sort(sort).toArray();
 };
 
 

@@ -1,6 +1,7 @@
 import { Db } from "mongodb";
 import { COLLECTIONS, ELEMENT_SELECT } from "../../config/constants";
 import { pagination } from "../../lib/pagination";
+import ResolversOperationsService from "../../services/resolver-operations";
 
 const queryCountryResolvers = {
   Query: {
@@ -12,39 +13,11 @@ const queryCountryResolvers = {
       },
       context: { db: Db }
     ) {
-      const { page, pages, itemsPage, total } = await pagination(
-        context.db,
+      return new ResolversOperationsService(context.db).list(
         COLLECTIONS.countries,
-        args.page,
-        args.itemsPage,
-        {}
-      );
-
-      const list = await context.db
-        .collection(COLLECTIONS.countries)
-        .find()
-        .skip((args.page - 1) * args.itemsPage)
-        .limit(args.itemsPage)
-        .sort({ id: 1 })
-        .toArray();
-
-      return {
-        info: {
-          page,
-          pages,
-          itemsPage,
-          total,
-        },
-        status: list && list.length ? true : false,
-        message:
-          list && list.length
-            ? "Countries correct load"
-            : page > pages
-            ? "Select page is not correct selection"
-            : "Countries not load correctly. Please try again",
-        elementSelect: ELEMENT_SELECT.COUNTRIES,
-        list,
-      };
+        ELEMENT_SELECT.COUNTRIES,
+        args.page, args.itemsPage
+      )
     },
     async country(
       _: {},
