@@ -1,13 +1,14 @@
-import { Db } from 'mongodb';
-import { countElements } from './db-operations';
+import { Db } from "mongodb";
+import { IPaginationOptions } from "../interfaces/pagination-options.interface";
+import { countElements } from "./db-operations";
 
 export async function pagination(
   db: Db,
   collection: string,
-  page: number = 1,
-  itemsPage: number = 20,
+  page = 1,
+  itemsPage = 20,
   filter: object = {}
-) {
+): Promise<IPaginationOptions> {
     // Comprobar el numero de items por pagina
     if (itemsPage < 1 || itemsPage > 20) {
         itemsPage = 20;

@@ -1,7 +1,7 @@
 // import UsersService from "./../../services/users.service";
-import { Db } from 'mongodb';
-import { ELEMENT_SELECT } from '../../config/constants';
-import { pagination } from '../../lib/pagination';
+import { Db } from "mongodb";
+import { ELEMENT_SELECT } from "../../config/constants";
+import { pagination } from "../../lib/pagination";
 
 const queryCityResolvers = {
   Query: {
@@ -15,15 +15,15 @@ const queryCityResolvers = {
     ) {
       const { page, pages, itemsPage, total } = await pagination(
         context.db,
-        'cities',
+        "cities",
         args.page,
         args.itemsPage,
         {}
       );
       const list = await context.db
-        .collection('cities')
+        .collection("cities")
         .find()
-        .skip((args.page - 1) * 10)
+        .skip((args.page - 1) * args.itemsPage)
         .limit(args.itemsPage)
         .sort({ id: 1 })
         .toArray();
@@ -38,10 +38,10 @@ const queryCityResolvers = {
         status: list && list.length ? true : false,
         message:
           list && list.length
-            ? 'Cities correct load'
+            ? "Cities correct load"
             : page > pages
-            ? 'Select page is not correct selection'
-            : 'Cities not load correctly. Please try again',
+            ? "Select page is not correct selection"
+            : "Cities not load correctly. Please try again",
         elementSelect: ELEMENT_SELECT.CITIES,
         list,
       };
@@ -53,14 +53,14 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const item = await context.db.collection('cities').findOne({
+      const item = await context.db.collection("cities").findOne({
         id: +args.id,
       });
       return {
         status: item ? true : false,
         message: item
-          ? 'City correct load'
-          : 'City not found, please try again',
+          ? "City correct load"
+          : "City not found, please try again",
         elementSelect: ELEMENT_SELECT.CITY,
         item,
       };
@@ -76,7 +76,7 @@ const queryCityResolvers = {
     ) {
       const { page, pages, itemsPage, total } = await pagination(
         context.db,
-        'cities',
+        "cities",
         args.page,
         args.itemsPage,
         {
@@ -85,11 +85,11 @@ const queryCityResolvers = {
       );
 
       const list = await context.db
-        .collection('cities')
+        .collection("cities")
         .find({
           countryId: +args.country,
         })
-        .skip((page - 1) * 10)
+        .skip((args.page - 1) * args.itemsPage)
         .limit(itemsPage)
         .sort({ id: 1 })
         .toArray();
@@ -104,10 +104,10 @@ const queryCityResolvers = {
         status: list && list.length ? true : false,
         message:
           list && list.length
-            ? 'Cities by select country correct load'
+            ? "Cities by select country correct load"
             : page > pages
-            ? 'Select page is not correct selection'
-            : 'Cities by select countries not load correctly. Please try again',
+            ? "Select page is not correct selection"
+            : "Cities by select countries not load correctly. Please try again",
         elementSelect: ELEMENT_SELECT.CITIES,
         list,
       };

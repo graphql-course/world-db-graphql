@@ -1,9 +1,6 @@
-// import UsersService from "./../../services/users.service";
-import assert from 'assert';
+import { findElements } from './../../lib/db-operations';
 import { Db } from 'mongodb';
-import { pipeline } from 'stream';
 import { ELEMENT_SELECT } from '../../config/constants';
-import { aggregateOperation } from '../../lib/db-operations';
 import { pagination } from '../../lib/pagination';
 
 const queryCountryResolvers = {
@@ -25,12 +22,13 @@ const queryCountryResolvers = {
       );
 
       const list = await context.db
-      .collection('countries')
-      .find()
-      .skip((args.page - 1) * 10)
-      .limit(args.itemsPage)
-      .sort({ id: 1 })
-      .toArray();
+        .collection('countries')
+        .find()
+        .skip((args.page - 1) * args.itemsPage)
+        .limit(args.itemsPage)
+        .sort({ id: 1 })
+        .toArray();
+
 
       return {
         info: {
@@ -40,11 +38,12 @@ const queryCountryResolvers = {
           total,
         },
         status: list && list.length ? true : false,
-        message: list && list.length
-          ? 'Countries correct load'
-          : page > pages
-          ? 'Select page is not correct selection'
-          : 'Countries not load correctly. Please try again',
+        message:
+          list && list.length
+            ? 'Countries correct load'
+            : page > pages
+            ? 'Select page is not correct selection'
+            : 'Countries not load correctly. Please try again',
         elementSelect: ELEMENT_SELECT.COUNTRIES,
         list,
       };

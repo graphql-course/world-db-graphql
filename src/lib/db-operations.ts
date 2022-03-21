@@ -1,5 +1,5 @@
-import { Db } from 'mongodb';
-import { IPaginationOptions } from '../interfaces/pagination-options.interface';
+import { Db } from "mongodb";
+import { IPaginationOptions } from "../interfaces/pagination-options.interface";
 
 /**
  * Obtener el ID que vamos a utilizar en el nuevo usuario
@@ -27,15 +27,13 @@ import { IPaginationOptions } from '../interfaces/pagination-options.interface';
 export const findOneElement = async (
   database: Db,
   collection: string,
-  filter: object
-) => {
-  return database.collection(collection).findOne(filter);
-};
+  filter: any
+) => database.collection(collection).findOne(filter);
 
 export const insertOneElement = async (
   database: Db,
   collection: string,
-  document: object
+  document: any
 ) => {
   return await database.collection(collection).insertOne(document);
 };
@@ -43,7 +41,7 @@ export const insertOneElement = async (
 export const insertManyElements = async (
   database: Db,
   collection: string,
-  documents: Array<object>
+  documents: Array<any>
 ) => {
   return await database.collection(collection).insertMany(documents);
 };
@@ -99,7 +97,7 @@ export const randomItems = async(
   database: Db,
   collection: string,
   filter: object = {},
-  items: number = 10
+  items = 10
 ): Promise<Array<object>> => {
   return new Promise(async(resolve) => {
     const pipeline = [
@@ -127,7 +125,7 @@ export const manageStockUpdate = async (
 export const aggregateOperation = async(
   database: Db,
   collection: string,
-  pipeline: any
+  pipeline: Document[]
 ): Promise<Array<object>> => {
   return new Promise((resolve) => {
     resolve(database.collection(collection).aggregate(
