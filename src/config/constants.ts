@@ -6,14 +6,13 @@ export const ELEMENT_SELECT = {
 };
 
 export const COLLECTIONS = {
-  cities: 'cities',
-  countries: 'countries'
-}
+  cities: "cities",
+  countries: "countries",
+};
 
 export const RESULTS = {
   cities: "ResultCities",
   city: "ResultCity",
   countries: "ResultCountries",
-  country: "ResultCountry"
-}
-
+  country: "ResultCountry",
+};

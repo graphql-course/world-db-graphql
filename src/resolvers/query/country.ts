@@ -1,12 +1,11 @@
 import { Db } from "mongodb";
 import { COLLECTIONS, ELEMENT_SELECT } from "../../config/constants";
-import { pagination } from "../../lib/pagination";
 import ResolversOperationsService from "../../services/resolver-operations";
 
 const queryCountryResolvers = {
   Query: {
     async countries(
-      _: {},
+      _: unknown,
       args: {
         page: number;
         itemsPage: number;
@@ -17,10 +16,10 @@ const queryCountryResolvers = {
         COLLECTIONS.countries,
         ELEMENT_SELECT.COUNTRIES,
         args.page, args.itemsPage
-      )
+      );
     },
     async country(
-      _: {},
+      _: unknown,
       args: {
         id: string;
       },

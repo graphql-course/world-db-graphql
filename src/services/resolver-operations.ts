@@ -71,7 +71,7 @@ class ResolversOperationsService {
     try {
       return await findOneElement(this.getDb(), collection, {
         id,
-      }).then((result: any) => {
+      }).then((result: unknown) => {
         if (result) {
           return {
             status: true,

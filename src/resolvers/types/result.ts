@@ -23,10 +23,6 @@ const resolverTypes: IResolvers = {
   },
   ResultCities: {
     selectCountry: async (parent, __, context: { db: Db }, info) => {
-      console.log(parent);
-      // console.log(parent.borders);
-      // Uso de operador "$in"
-      // https://docs.mongodb.com/manual/reference/operator/query/in/
       return info.path.prev?.key === "cities"
         ? ""
         : parent.status ? findOneElement(context.db, COLLECTIONS.countries, {
