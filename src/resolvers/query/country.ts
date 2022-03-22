@@ -25,7 +25,13 @@ const queryCountryResolvers = {
       },
       context: { db: Db }
     ) {
-      const item = await context.db.collection(COLLECTIONS.countries).findOne({
+
+      return new ResolversOperationsService(context.db).get(
+        COLLECTIONS.countries,
+        ELEMENT_SELECT.COUNTRY,
+        +args.id
+      );
+      /*const item = await context.db.collection(COLLECTIONS.countries).findOne({
         id: +args.id,
       });
       return {
@@ -35,7 +41,7 @@ const queryCountryResolvers = {
           : "Country not found, please try again",
         elementSelect: ELEMENT_SELECT.COUNTRY,
         item,
-      };
+      };*/
     },
   },
 };

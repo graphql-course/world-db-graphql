@@ -27,7 +27,12 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const item = await context.db.collection(COLLECTIONS.cities).findOne({
+      return new ResolversOperationsService(context.db).get(
+        COLLECTIONS.cities,
+        ELEMENT_SELECT.CITY,
+        +args.id
+      );
+      /*const item = await context.db.collection(COLLECTIONS.cities).findOne({
         id: +args.id,
       });
       return {
@@ -37,7 +42,7 @@ const queryCityResolvers = {
           : "City not found, please try again",
         elementSelect: ELEMENT_SELECT.CITY,
         item,
-      };
+      };*/
     },
     async citiesByCountry(
       _: unknown,

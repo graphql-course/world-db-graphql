@@ -66,29 +66,35 @@ class ResolversOperationsService {
     }
   }
   // Obtener detalles del item
-  protected async get(collection: string, id: number | string) {
+  async get(collection: string, listElement: string, id: number | string) {
     const collectionLabel = collection.toLowerCase();
     try {
       return await findOneElement(this.getDb(), collection, {
         id,
       }).then((result: unknown) => {
-        if (result) {
+        
           return {
-            status: true,
-            message: `${collectionLabel} ha sido cargada correctamente con sus detalles`,
+            status: result ? true : false,
+            message:
+              result
+            ? `${listElement[0]
+                .toUpperCase()
+                .concat(listElement.substring(1))} correct load`
+                : `${listElement[0]
+                  .toUpperCase()
+                  .concat(
+                    listElement.substring(1)
+                  )} not load correctly. Please try again`,     
+            elementSelect: listElement,
             item: result,
           };
-        }
-        return {
-          status: true,
-          message: `${collectionLabel} no ha obtenido detalles porque no existe`,
-          item: null,
-        };
+        
       });
     } catch (error) {
       return {
         status: false,
         message: `Error inesperado al querer cargar los detalles de ${collectionLabel}`,
+        elementSelect: listElement,
         item: null,
       };
     }
