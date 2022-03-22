@@ -32,17 +32,6 @@ const queryCityResolvers = {
         ELEMENT_SELECT.CITY,
         +args.id
       );
-      /*const item = await context.db.collection(COLLECTIONS.cities).findOne({
-        id: +args.id,
-      });
-      return {
-        status: item ? true : false,
-        message: item
-          ? "City correct load"
-          : "City not found, please try again",
-        elementSelect: ELEMENT_SELECT.CITY,
-        item,
-      };*/
     },
     async citiesByCountry(
       _: unknown,

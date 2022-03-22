@@ -11,11 +11,13 @@ class GraphQLServer {
   // Propiedades
   private app!: Application;
   private httpServer!: Server;
-  private readonly DEFAULT_PORT = (process.env.PORT) ? +process.env.PORT: 3025;
+  private readonly DEFAULT_PORT = process.env.PORT ? +process.env.PORT : 3026;
   private schema!: GraphQLSchema;
   constructor(schema: GraphQLSchema) {
     if (schema === undefined) {
-      throw new Error("Necesitamos un schema de GraphQL para trabajar con APIs GraphQL");
+      throw new Error(
+        "Necesitamos un schema de GraphQL para trabajar con APIs GraphQL"
+      );
     }
     this.schema = schema;
     this.init();
@@ -48,7 +50,7 @@ class GraphQLServer {
     const database = new Database();
     const db = await database.init();
 
-    const context = async({req, connection}: IContext) => {
+    const context = async ({ req, connection }: IContext) => {
       // Obtener el token que enviamos desde las cabeceras
       const token = req ? req.headers.authorization : connection.authorization;
       return { db, token };
@@ -56,21 +58,19 @@ class GraphQLServer {
     const apolloServer = new ApolloServer({
       schema: this.schema,
       introspection: true,
-      context
+      context,
     });
 
     await apolloServer.start();
 
     apolloServer.applyMiddleware({ app: this.app, cors: true });
-
-   
   }
 
   private configRoutes() {
     this.app.get("/hello", (_, res) => {
       res.send("Bienvenid@s al primer proyecto");
     });
-  
+
     this.app.get("/", (_, res) => {
       res.redirect("/graphql");
     });
