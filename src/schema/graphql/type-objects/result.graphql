@@ -27,5 +27,6 @@ type ResultCities implements Result{
     status: Boolean!
     message: String!
     elementSelect: String!
+    selectCountry: String!
     list: [City]
 }

@@ -49,7 +49,15 @@ const queryCityResolvers = {
       },
       context: { db: Db }
     ) {
-      const { page, pages, itemsPage, total } = await pagination(
+      return new ResolversOperationsService(context.db).list(
+        COLLECTIONS.cities,
+        ELEMENT_SELECT.CITIES,
+        args.page, args.itemsPage,
+        {
+          countryId: +args.country,
+        }
+      )
+      /*const { page, pages, itemsPage, total } = await pagination(
         context.db,
         COLLECTIONS.cities,
         args.page,
@@ -85,7 +93,7 @@ const queryCityResolvers = {
             : "Cities by select countries not load correctly. Please try again",
         elementSelect: ELEMENT_SELECT.CITIES,
         list,
-      };
+      };*/
     },
   },
 };
