@@ -1,5 +1,6 @@
 import { Db } from "mongodb";
 import { COLLECTIONS, ELEMENT_SELECT } from "../../config/constants";
+import { countElements } from "../../lib/db-operations";
 import ResolversOperationsService from "../../services/resolver-operations";
 
 const queryCountryResolvers = {
@@ -31,18 +32,10 @@ const queryCountryResolvers = {
         ELEMENT_SELECT.COUNTRY,
         +args.id
       );
-      /*const item = await context.db.collection(COLLECTIONS.countries).findOne({
-        id: +args.id,
-      });
-      return {
-        status: item ? true : false,
-        message: item
-          ? "Country correct load"
-          : "Country not found, please try again",
-        elementSelect: ELEMENT_SELECT.COUNTRY,
-        item,
-      };*/
     },
+    async countriesTotal(_: unknown, __: unknown, context: { db: Db} ) {
+      return countElements(context.db, COLLECTIONS.countries);
+    }
   },
 };
 

@@ -2,6 +2,7 @@ import { COLLECTIONS } from "./../../config/constants";
 import { Db } from "mongodb";
 import { ELEMENT_SELECT } from "../../config/constants";
 import ResolversOperationsService from "../../services/resolver-operations";
+import { countElements } from "../../lib/db-operations";
 
 const queryCityResolvers = {
   Query: {
@@ -36,7 +37,7 @@ const queryCityResolvers = {
     async citiesByCountry(
       _: unknown,
       args: {
-        country: string;
+        country: number;
         page: number;
         itemsPage: number;
       },
@@ -52,6 +53,14 @@ const queryCityResolvers = {
         }
       );
     },
+    async citiesTotal(_: unknown, __: unknown, context: { db: Db} ) {
+      return countElements(context.db, COLLECTIONS.cities);
+    },
+    async citiesByCountryTotal(_: unknown, args: {
+      country: number;
+    }, context: { db: Db} ) {
+      return countElements(context.db, COLLECTIONS.cities, { countryId: +args.country});
+    }
   },
 };
 

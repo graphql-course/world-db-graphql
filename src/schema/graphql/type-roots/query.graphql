@@ -7,6 +7,7 @@ type Query {
     "Usuarios por página que se obtendrán por página"
     itemsPage: Int = 20
   ): Result
+  countriesTotal: Int!
   "Para iniciar sesión de usuario"
   cities(
     "Página seleccionada para acceder a ella"
@@ -14,6 +15,7 @@ type Query {
     "Usuarios por página que se obtendrán por página"
     itemsPage: Int = 20
   ): Result
+  citiesTotal: Int!
   citiesByCountry(
     country: ID!
     "Página seleccionada para acceder a ella"
@@ -21,6 +23,7 @@ type Query {
     "Usuarios por página que se obtendrán por página"
     itemsPage: Int = 20
   ): Result
+  citiesByCountryTotal(country: ID!): Int!
   "Obtener los detalles de un usuario seleccionado"
   country(id: ID!): Result
   "Obtener los detalles de un usuario seleccionado"
