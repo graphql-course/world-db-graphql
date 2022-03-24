@@ -3,6 +3,7 @@ type Country {
   name: String!
   iso3: String!
   iso2: String!
+  citiesInCountry: Int!
   numeric_code: String!
   phone_code: String!
   capital: String!

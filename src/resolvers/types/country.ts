@@ -1,4 +1,4 @@
-import { findElements } from "./../../lib/db-operations";
+import { countElements, findElements } from "./../../lib/db-operations";
 import { IResolvers } from "@graphql-tools/utils";
 import { Db } from "mongodb";
 import { COLLECTIONS } from "../../config/constants";
@@ -13,6 +13,9 @@ const resolverCountryType: IResolvers = {
         iso3: { $in: parent.borders },
       });
     },
+    citiesInCountry: async(parent, __, context: { db : Db}) => {
+      return await countElements(context.db, COLLECTIONS.cities, { countryId: +parent.id});
+    }
   },
 };
 
