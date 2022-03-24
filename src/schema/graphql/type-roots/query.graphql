@@ -8,6 +8,7 @@ type Query {
     itemsPage: Int = 20
   ): Result
   countriesTotal: Int!
+  countriesRandom: Result
   "Para iniciar sesión de usuario"
   cities(
     "Página seleccionada para acceder a ella"

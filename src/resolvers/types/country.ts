@@ -13,9 +13,10 @@ const resolverCountryType: IResolvers = {
         iso3: { $in: parent.borders },
       });
     },
-    citiesInCountry: async(parent, __, context: { db : Db}) => {
-      return await countElements(context.db, COLLECTIONS.cities, { countryId: +parent.id});
-    }
+    citiesInCountry: async (parent, __, context: { db: Db }) =>
+      await countElements(context.db, COLLECTIONS.cities, {
+        countryId: +parent.id,
+      }),
   },
 };
 
