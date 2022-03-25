@@ -37,8 +37,8 @@ const queryCountryResolvers = {
     async countriesTotal(_: unknown, __: unknown, context: { db: Db }) {
       return countElements(context.db, COLLECTIONS.countries);
     },
-    async countriesRandom(_: unknown, __: unknown, context: { db: Db }) {
-      const list = await randomItems(context.db, COLLECTIONS.countries);
+    async countriesRandom(_: unknown, args: { items: number}, context: { db: Db }) {
+      const list = await randomItems(context.db, COLLECTIONS.countries, {}, args.items);
       const listElement = ELEMENT_SELECT.COUNTRIES;
       return {
         info: null,
