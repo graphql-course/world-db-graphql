@@ -4,12 +4,12 @@ type Country {
   iso3: String!
   iso2: String!
   citiesInCountry: Int!
-  numeric_code: String!
-  phone_code: String!
+  numericCode: String!
+  phoneCode: String!
   capital: String!
   currency: String!
-  currency_name: String!
-  currency_symbol: String!
+  currencyName: String!
+  currencySymbol: String!
   tld: String!
   native: String!
   region: String!

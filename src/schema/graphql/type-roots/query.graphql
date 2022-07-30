@@ -1,32 +1,38 @@
-"Definiciones de los tipos de raíz"
+"Root types definitions with Query"
 type Query {
-  "Lista de usuarios registrados en la Base de datos (Clientes / Admins)"
+  "Countries list with paginations options"
   countries(
-    "Página seleccionada para acceder a ella"
+    "Select page. Default first page"
     page: Int = 1
-    "Usuarios por página que se obtendrán por página"
+    "Elements by page. For default 20 items and maximum items"
     itemsPage: Int = 20
   ): Result
+  "Define exist count countries elements in database"
   countriesTotal: Int!
+  "Get select items count countries list. By default 10 countries"
   countriesRandom(items: Int = 10): Result
-  "Para iniciar sesión de usuario"
+  "Cities list with pagination"
   cities(
-    "Página seleccionada para acceder a ella"
+    "Select page. Default first page"
     page: Int = 1
-    "Usuarios por página que se obtendrán por página"
+    "Elements by page. For default 20 items and maximum items"
     itemsPage: Int = 20
   ): Result
+  "Define exist count cities elements in database"
   citiesTotal: Int!
+  "Obtain list of cities that exist in select country"
   citiesByCountry(
+    "Use country ID to filter"
     country: ID!
-    "Página seleccionada para acceder a ella"
+    "Select page. Default first page"
     page: Int = 1
-    "Usuarios por página que se obtendrán por página"
+    "Elements by page. For default 20 items and maximum items"
     itemsPage: Int = 20
   ): Result
+  "Count cities total by select country with ID"
   citiesByCountryTotal(country: ID!): Int!
-  "Obtener los detalles de un usuario seleccionado"
+  "Obtain details in select country by id"
   country(id: ID!): Result
-  "Obtener los detalles de un usuario seleccionado"
+  "Obtain details in select city by id"
   city(id: ID!): Result
 }
